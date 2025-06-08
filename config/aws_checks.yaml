@@ -1,0 +1,62 @@
+# AWS Security Checks Configuration
+version: "1.0"
+description: "AWS Security Posture Assessment Checks"
+
+checks:
+  s3:
+    - id: "S3_PUBLIC_READ"
+      name: "S3 Bucket Public Read Access"
+      description: "Check for S3 buckets with public read access"
+      severity: "high"
+      remediation: "Remove public read permissions from bucket ACL"
+    
+    - id: "S3_PUBLIC_WRITE"
+      name: "S3 Bucket Public Write Access"
+      description: "Check for S3 buckets with public write access"
+      severity: "critical"
+      remediation: "Remove public write permissions from bucket ACL"
+    
+    - id: "S3_ENCRYPTION_DISABLED"
+      name: "S3 Bucket Encryption Disabled"
+      description: "Check for S3 buckets without default encryption"
+      severity: "medium"
+      remediation: "Enable default encryption for the bucket"
+  
+  iam:
+    - id: "IAM_ADMIN_POLICY"
+      name: "IAM Admin Policy"
+      description: "Check for IAM policies granting admin access"
+      severity: "critical"
+      remediation: "Apply principle of least privilege"
+    
+    - id: "IAM_ROOT_ACCESS_KEY"
+      name: "Root Account Access Keys"
+      description: "Check for root account access keys"
+      severity: "critical"
+      remediation: "Delete root access keys and use IAM users"
+  
+  ec2:
+    - id: "SG_OPEN_INGRESS"
+      name: "Security Group Open Ingress"
+      description: "Check for security groups allowing ingress from 0.0.0.0/0"
+      severity: "high"
+      remediation: "Restrict source IP ranges"
+    
+    - id: "SG_OPEN_SSH"
+      name: "Security Group Open SSH"
+      description: "Check for security groups allowing SSH from anywhere"
+      severity: "critical"
+      remediation: "Restrict SSH access to specific IP ranges"
+  
+  rds:
+    - id: "RDS_PUBLIC_ACCESS"
+      name: "RDS Public Access"
+      description: "Check for RDS instances with public access"
+      severity: "high"
+      remediation: "Disable public accessibility"
+    
+    - id: "RDS_ENCRYPTION_DISABLED"
+      name: "RDS Encryption Disabled"
+      description: "Check for RDS instances without encryption"
+      severity: "medium"
+      remediation: "Enable storage encryption"
